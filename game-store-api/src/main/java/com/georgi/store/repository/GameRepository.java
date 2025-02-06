@@ -3,7 +3,9 @@ package com.georgi.store.repository;
 import com.georgi.store.model.entity.Category;
 import com.georgi.store.model.entity.Game;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,9 +28,18 @@ public interface GameRepository extends JpaRepository<Game, String> {
 
     //JPQL syntax
     @Query("""
-            SELECT c FROM Category c
-            WHERE c.name LIKE :name
-            ORDER BY c.name ASC
+            SELECT g FROM Game g
+            INNER JOIN Category c
+            ON g.category.id = c.id
+            WHERE c.name LIKE %:name%
             """)
-    List<Category> findAllByName(String name);
+    List<Game> findAllByCat(@Param("name") String catName);
+
+
+    @Modifying
+    @Query("""
+                UPDATE Game
+                SET title = upper(title)
+            """)
+    void transformGamesTitleToUpperCase();
 }
