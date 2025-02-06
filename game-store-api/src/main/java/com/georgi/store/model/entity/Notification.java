@@ -2,10 +2,7 @@ package com.georgi.store.model.entity;
 
 import com.georgi.store.model.enums.NotificationLevel;
 import com.georgi.store.model.enums.NotificationStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,4 +22,8 @@ public class Notification extends BaseEntity{
     private NotificationLevel level;
     @Enumerated(EnumType.STRING)
     private NotificationStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

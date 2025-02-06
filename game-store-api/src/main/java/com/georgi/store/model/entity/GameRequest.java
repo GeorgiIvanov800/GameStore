@@ -1,10 +1,7 @@
 package com.georgi.store.model.entity;
 
 import com.georgi.store.model.enums.RequestStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,4 +18,8 @@ public class GameRequest extends BaseEntity{
     private String title;
     @Enumerated(EnumType.STRING)
     private RequestStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

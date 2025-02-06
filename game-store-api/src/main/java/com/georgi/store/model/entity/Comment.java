@@ -1,6 +1,8 @@
 package com.georgi.store.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,5 +17,9 @@ import lombok.Setter;
 @Table(name = "comments")
 public class Comment extends BaseEntity {
 
-    private String comment;
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id")
+    private Game game;
 }
