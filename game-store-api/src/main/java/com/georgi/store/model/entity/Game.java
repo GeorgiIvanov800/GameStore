@@ -31,7 +31,7 @@ public class Game extends BaseEntity {
     private List<Comment> comments;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "games_wishlists", joinColumns = {
+    @JoinTable(name = "game_wishlist", joinColumns = {
             @JoinColumn(
                     name = "game_id"
             )
