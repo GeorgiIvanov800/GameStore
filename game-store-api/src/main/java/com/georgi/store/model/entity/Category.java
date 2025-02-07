@@ -1,6 +1,7 @@
 package com.georgi.store.model.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,12 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "categories")
+@NamedQuery(name = "Category.findByName",
+        query = """
+        SELECT c FROM Category c
+        WHERE c.name LIKE lower(:catName)
+        ORDER BY c.name ASC
+        """)
 public class Category extends BaseEntity {
 
     private String name;

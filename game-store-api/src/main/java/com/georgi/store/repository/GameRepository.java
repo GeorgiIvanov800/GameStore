@@ -2,6 +2,7 @@ package com.georgi.store.repository;
 
 import com.georgi.store.model.entity.Category;
 import com.georgi.store.model.entity.Game;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +26,9 @@ public interface GameRepository extends JpaRepository<Game, String> {
     WHERE c.name = 'Action'
 */
     List<Game> findAllByCategoryName(String categoryName);
+
+    //Return a page result
+    List<Game> findAllByCategoryName(String categoryName, Pageable pageable);
 
     //JPQL syntax
     @Query("""
