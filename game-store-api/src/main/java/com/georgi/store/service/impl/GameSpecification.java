@@ -1,11 +1,18 @@
 package com.georgi.store.service.impl;
 
 import com.georgi.store.model.entity.Game;
+import com.georgi.store.model.enums.SupportedPlatforms;
 import org.springframework.data.jpa.domain.Specification;
 
 public class GameSpecification {
 
-    public static Specification<Game> byGameId(String title) {
-        return (root, query, cb) -> cb.equal(root.get("title"), title);
+    public static Specification<Game> byGameTitle(String title) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("title"), title);
+    }
+
+    public static Specification<Game> bySupportedPlatforms(SupportedPlatforms platform) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("platform"), platform);
     }
 }
