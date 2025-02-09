@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,8 +29,11 @@ public class GameServiceImpl implements GameService {
     }
 
     public PageResponse<Game> pagedResult(final int pageNumber, final int pageSize) {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Direction.ASC, "title"));
+
         Page<Game> pagedResult = gameRepository.findAllByCategoryName("anyCat", pageable);
+
 
         return PageResponse.<Game>builder()
                 .content(pagedResult.getContent())
@@ -39,4 +43,6 @@ public class GameServiceImpl implements GameService {
                 .isLast(pagedResult.isLast())
                 .build();
     }
+
+
 }
