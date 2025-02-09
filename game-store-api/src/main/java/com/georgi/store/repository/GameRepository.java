@@ -2,6 +2,7 @@ package com.georgi.store.repository;
 
 import com.georgi.store.model.entity.Category;
 import com.georgi.store.model.entity.Game;
+import com.georgi.store.service.GameRepresentation1;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -50,4 +51,17 @@ public interface GameRepository extends JpaRepository<Game, String>, JpaSpecific
     void transformGamesTitleToUpperCase();
 
 
+    @Query("""
+            SELECT g.id as gameId,
+                   g.title AS gameTitle
+            FROM Game g
+            """)
+    List<GameRepresentation1> findAllGames();
+
+    @Query("""
+            SELECT g.title as gameTitle,
+                   g.category.name AS categoryName
+            FROM Game g
+            """)
+    List<GameRepresentation1> findAllGames2();
 }

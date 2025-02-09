@@ -5,7 +5,7 @@ import com.georgi.store.model.enums.SupportedPlatforms;
 import org.springframework.data.jpa.domain.Specification;
 
 public class GameSpecification {
-    // This class represent something like a Set of Filters for the query
+    // This class is for defining a set(list) of specification and each specification will be considered as separate filter
 
     public static Specification<Game> byGameTitle(String title) {
         return (root, query, criteriaBuilder) ->
@@ -17,5 +17,8 @@ public class GameSpecification {
                 criteriaBuilder.equal(root.get("platform"), platform);
     }
 
-
+    public static Specification<Game> byCategoryName(String categoryName) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get("category").get("name"), categoryName);
+    }
 }

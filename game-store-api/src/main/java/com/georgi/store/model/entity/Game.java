@@ -43,11 +43,11 @@ public class Game extends BaseEntity {
     )
     private List<WishList> wishlists;
 
-    public void addWishlist(WishList wishlist) {
+    public void addGameToWishlist(WishList wishlist) {
         this.wishlists.add(wishlist);
         wishlist.getGames().add(this);
     }
-    public void removeWishlist(WishList wishlist) {
+    public void removeGameFromWishlist(WishList wishlist) {
         this.wishlists.remove(wishlist);
         wishlist.getGames().remove(this);
     }

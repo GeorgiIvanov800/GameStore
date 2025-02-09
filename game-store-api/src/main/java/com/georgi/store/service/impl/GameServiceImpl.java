@@ -3,6 +3,7 @@ package com.georgi.store.service.impl;
 import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.enums.SupportedPlatforms;
 import com.georgi.store.repository.GameRepository;
+import com.georgi.store.service.GameRepresentation1;
 import com.georgi.store.service.GameService;
 import com.georgi.store.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -50,12 +51,18 @@ public class GameServiceImpl implements GameService {
     }
 
     // Use GameSpecification class to query the Database
-    public void specificationExample() {
+    public void specificationExample1() {
         Specification<Game> spec = buildSpecificationWitchAndOperator("witcher", SupportedPlatforms.PC);
 
         List<Game> games = gameRepository.findAll(spec);
     }
 
+
+    private void specificationExample2() {
+        Specification<Game> spec = buildSpecificationWitchOrOperator("witcher", SupportedPlatforms.PC);
+
+        List<Game> games = gameRepository.findAll(spec);
+    }
 
     private Specification<Game> buildSpecificationWitchAndOperator (String title, SupportedPlatforms platform) {
         Specification<Game> spec = Specification.where(null);
@@ -69,5 +76,28 @@ public class GameServiceImpl implements GameService {
         }
 
         return spec;
+    }
+
+    private Specification<Game> buildSpecificationWitchOrOperator (String title, SupportedPlatforms platform) {
+        Specification<Game> spec = Specification.where(null);
+
+        if (StringUtils.hasLength(title)) {
+            spec = spec.or(GameSpecification.byGameTitle("witcher"));
+        }
+
+        if (platform != null) {
+            spec = spec.or(GameSpecification.bySupportedPlatforms(SupportedPlatforms.PC));
+        }
+
+        return spec;
+    }
+
+    // 1 class (GameRepresentation1) (id, title, platform)
+    // 2 call game repository and fetch all the games (paged)
+    // 3 map the result  (loop over the result from the DB, do the mapping, collect, return the result)
+
+    // With the interface representation we can skipp mapping
+    public List<GameRepresentation1> getGamesWithRepresentation1() {
+            return gameRepository.findAllGames();
     }
 }
