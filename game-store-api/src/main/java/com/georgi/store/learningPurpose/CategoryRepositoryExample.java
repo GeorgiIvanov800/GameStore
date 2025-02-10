@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, String> {
+public interface CategoryRepositoryExample extends JpaRepository<Category, String> {
 
     // fetch all the categories by name starting with ('ac...')
     // SELECT * FROM Category WHERE name LIKE 'a%' ORDER BY name DESC

@@ -4,7 +4,7 @@ import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.enums.Console;
 import org.springframework.data.jpa.domain.Specification;
 
-public class GameSpecification {
+public class GameSpecificationExample {
     // This class is for defining a set(list) of specification and each specification will be considered as separate filter
 
     public static Specification<Game> byGameTitle(String title) {

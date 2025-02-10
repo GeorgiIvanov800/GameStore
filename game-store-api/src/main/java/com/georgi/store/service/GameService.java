@@ -3,6 +3,7 @@ package com.georgi.store.service;
 
 import com.georgi.store.model.dto.PageResponse;
 import com.georgi.store.model.dto.gameDto.GameRequest;
+import com.georgi.store.model.dto.gameDto.GameResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface GameService {

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -16,8 +17,10 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "games")
+@SuperBuilder
 public class Game extends BaseEntity {
 
+    @Column(nullable = false, unique = true)
     private String title;
 
     @ManyToMany(fetch = FetchType.EAGER)

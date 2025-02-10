@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface GameRepository extends JpaRepository<Game, String>, JpaSpecificationExecutor<Game> {
+public interface GameRepositoryExample extends JpaRepository<Game, String>, JpaSpecificationExecutor<Game> {
 
     // fetch all games by category (v1)
     List<Game> findAllByCategory(Category category);
@@ -55,12 +55,12 @@ public interface GameRepository extends JpaRepository<Game, String>, JpaSpecific
                    g.title AS gameTitle
             FROM Game g
             """)
-    List<GameRepresentation1> findAllGames();
+    List<GameRepresentationExample1> findAllGames();
 
     @Query("""
             SELECT g.title as gameTitle,
                    g.category.name AS categoryName
             FROM Game g
             """)
-    List<GameRepresentation1> findAllGames2();
+    List<GameRepresentationExample1> findAllGames2();
 }

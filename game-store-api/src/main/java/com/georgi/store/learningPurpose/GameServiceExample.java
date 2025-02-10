@@ -16,9 +16,9 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GameServiceTest {
+public class GameServiceExample {
 
-    private final GameRepository gameRepository;
+    private final GameRepositoryExample gameRepository;
 
 
     public void pagedResult() {
@@ -64,11 +64,11 @@ public class GameServiceTest {
         Specification<Game> spec = Specification.where(null);
 
         if (StringUtils.hasLength(title)) {
-            spec = spec.and(GameSpecification.byGameTitle("witcher"));
+            spec = spec.and(GameSpecificationExample.byGameTitle("witcher"));
         }
 
         if (platform != null) {
-            spec = spec.and(GameSpecification.bySupportedPlatforms(Console.PC));
+            spec = spec.and(GameSpecificationExample.bySupportedPlatforms(Console.PC));
         }
 
         return spec;
@@ -78,11 +78,11 @@ public class GameServiceTest {
         Specification<Game> spec = Specification.where(null);
 
         if (StringUtils.hasLength(title)) {
-            spec = spec.or(GameSpecification.byGameTitle("witcher"));
+            spec = spec.or(GameSpecificationExample.byGameTitle("witcher"));
         }
 
         if (platform != null) {
-            spec = spec.or(GameSpecification.bySupportedPlatforms(Console.PC));
+            spec = spec.or(GameSpecificationExample.bySupportedPlatforms(Console.PC));
         }
 
         return spec;
@@ -93,7 +93,7 @@ public class GameServiceTest {
     // 3 map the result  (loop over the result from the DB, do the mapping, collect, return the result)
 
     // With the interface representation we can skipp mapping
-    public List<GameRepresentation1> getGamesWithRepresentation1() {
+    public List<GameRepresentationExample1> getGamesWithRepresentation1() {
             return gameRepository.findAllGames();
     }
 }
