@@ -1,7 +1,7 @@
 package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Game;
-import com.georgi.store.model.enums.SupportedPlatforms;
+import com.georgi.store.model.enums.Console;
 import org.springframework.data.jpa.domain.Specification;
 
 public class GameSpecification {
@@ -12,7 +12,7 @@ public class GameSpecification {
                 criteriaBuilder.equal(root.get("title"), title);
     }
 
-    public static Specification<Game> bySupportedPlatforms(SupportedPlatforms platform) {
+    public static Specification<Game> bySupportedPlatforms(Console platform) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get("platform"), platform);
     }

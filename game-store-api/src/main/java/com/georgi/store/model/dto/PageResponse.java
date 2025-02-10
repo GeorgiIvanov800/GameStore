@@ -1,7 +1,6 @@
-package com.georgi.store.utils;
+package com.georgi.store.model.dto;
 
 import lombok.*;
-import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 @Getter

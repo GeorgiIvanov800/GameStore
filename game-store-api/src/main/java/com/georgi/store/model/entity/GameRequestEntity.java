@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "game_requests")
-public class GameRequest extends BaseEntity{
+public class GameRequestEntity extends BaseEntity{
 
     private String title;
     @Enumerated(EnumType.STRING)

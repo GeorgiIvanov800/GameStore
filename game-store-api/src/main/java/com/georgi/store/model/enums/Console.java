@@ -1,6 +1,6 @@
 package com.georgi.store.model.enums;
 
-public enum SupportedPlatforms {
+public enum Console {
     PC,
     XBOX,
     PS4,

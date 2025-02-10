@@ -1,6 +1,6 @@
 package com.georgi.store.model.entity;
 
-import com.georgi.store.model.enums.SupportedPlatforms;
+import com.georgi.store.model.enums.Console;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,8 +19,9 @@ import java.util.List;
 public class Game extends BaseEntity {
 
     private String title;
-    @Enumerated(EnumType.STRING)
-    private SupportedPlatforms supportedPlatforms;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Platform> platforms;
 
     private String coverPicture;
 

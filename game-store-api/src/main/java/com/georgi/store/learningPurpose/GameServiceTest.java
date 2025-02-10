@@ -1,8 +1,8 @@
 package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Game;
-import com.georgi.store.model.enums.SupportedPlatforms;
-import com.georgi.store.utils.PageResponse;
+import com.georgi.store.model.enums.Console;
+import com.georgi.store.model.dto.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,19 +48,19 @@ public class GameServiceTest {
 
     // Use GameSpecification class to query the Database
     public void specificationExample1() {
-        Specification<Game> spec = buildSpecificationWitchAndOperator("witcher", SupportedPlatforms.PC);
+        Specification<Game> spec = buildSpecificationWitchAndOperator("witcher", Console.PC);
 
         List<Game> games = gameRepository.findAll(spec);
     }
 
 
     private void specificationExample2() {
-        Specification<Game> spec = buildSpecificationWitchOrOperator("witcher", SupportedPlatforms.PC);
+        Specification<Game> spec = buildSpecificationWitchOrOperator("witcher", Console.PC);
 
         List<Game> games = gameRepository.findAll(spec);
     }
 
-    private Specification<Game> buildSpecificationWitchAndOperator (String title, SupportedPlatforms platform) {
+    private Specification<Game> buildSpecificationWitchAndOperator (String title, Console platform) {
         Specification<Game> spec = Specification.where(null);
 
         if (StringUtils.hasLength(title)) {
@@ -68,13 +68,13 @@ public class GameServiceTest {
         }
 
         if (platform != null) {
-            spec = spec.and(GameSpecification.bySupportedPlatforms(SupportedPlatforms.PC));
+            spec = spec.and(GameSpecification.bySupportedPlatforms(Console.PC));
         }
 
         return spec;
     }
 
-    private Specification<Game> buildSpecificationWitchOrOperator (String title, SupportedPlatforms platform) {
+    private Specification<Game> buildSpecificationWitchOrOperator (String title, Console platform) {
         Specification<Game> spec = Specification.where(null);
 
         if (StringUtils.hasLength(title)) {
@@ -82,7 +82,7 @@ public class GameServiceTest {
         }
 
         if (platform != null) {
-            spec = spec.or(GameSpecification.bySupportedPlatforms(SupportedPlatforms.PC));
+            spec = spec.or(GameSpecification.bySupportedPlatforms(Console.PC));
         }
 
         return spec;
