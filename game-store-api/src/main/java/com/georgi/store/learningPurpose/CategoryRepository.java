@@ -1,4 +1,4 @@
-package com.georgi.store.repository;
+package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

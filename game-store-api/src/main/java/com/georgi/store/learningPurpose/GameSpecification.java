@@ -1,4 +1,4 @@
-package com.georgi.store.service.impl;
+package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.enums.SupportedPlatforms;

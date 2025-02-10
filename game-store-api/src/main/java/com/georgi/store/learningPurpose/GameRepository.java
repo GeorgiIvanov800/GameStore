@@ -1,8 +1,7 @@
-package com.georgi.store.repository;
+package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Category;
 import com.georgi.store.model.entity.Game;
-import com.georgi.store.service.GameRepresentation1;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

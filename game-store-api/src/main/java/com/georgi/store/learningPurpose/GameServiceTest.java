@@ -1,10 +1,7 @@
-package com.georgi.store.service.impl;
+package com.georgi.store.learningPurpose;
 
 import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.enums.SupportedPlatforms;
-import com.georgi.store.repository.GameRepository;
-import com.georgi.store.service.GameRepresentation1;
-import com.georgi.store.service.GameService;
 import com.georgi.store.utils.PageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,12 +16,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class GameServiceImpl implements GameService {
+public class GameServiceTest {
 
     private final GameRepository gameRepository;
 
 
-    @Override
     public void pagedResult() {
         Pageable pageable = PageRequest.of(0, 10);
 

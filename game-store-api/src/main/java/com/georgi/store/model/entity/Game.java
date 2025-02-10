@@ -21,6 +21,7 @@ public class Game extends BaseEntity {
     private String title;
     @Enumerated(EnumType.STRING)
     private SupportedPlatforms supportedPlatforms;
+
     private String coverPicture;
 
     @ManyToOne

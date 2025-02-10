@@ -1,4 +1,4 @@
-package com.georgi.store.service;
+package com.georgi.store.learningPurpose;
 
 public interface GameRepresentation2 {
     String getGameTitle();
