@@ -18,9 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -47,12 +46,12 @@ public class GameServiceImpl implements GameService {
 
         // option 2: mapping the platforms (request) to Platform (entity) and fetch all of them at once
         // select * from platform where console in ('PC', 'PS', 'XBOX')
-        final Set<Console> selectedConsoles = gameRequest.platforms()
+        final List<Console> selectedConsoles = gameRequest.platforms()
                 .stream()
                 .map(Console::valueOf)
-                .collect(Collectors.toSet());
+                .toList();
 
-        final Set<Platform> platforms = platformRepository.findAllByConsoleIn(selectedConsoles);
+        final List<Platform> platforms = platformRepository.findAllByConsoleIn(selectedConsoles);
 
         if (platforms.size() != selectedConsoles.size()) {
             log.warn("Received a non supported platforms. Received: {} - Stored: {}", selectedConsoles, platforms);
@@ -68,7 +67,7 @@ public class GameServiceImpl implements GameService {
 
 
         final Game game = gameMapper.toGame(gameRequest);
-        game.setPlatforms((List<Platform>) platforms);
+        game.setPlatforms(platforms);
 
         final Game savedGame = gameRepository.save(game);
         return savedGame.getId();
@@ -86,7 +85,39 @@ public class GameServiceImpl implements GameService {
             throw new RuntimeException("Title already exists");
         }
 
+        final List<Console> selectedConsole = gameRequest.platforms()
+                .stream()
+                .map(Console::valueOf)
+                .toList();
 
+        final List<Platform> platforms = platformRepository.findAllByConsoleIn(selectedConsole);
+
+        final List<String> platformIds = platforms.stream()
+                .map(Platform::getId)
+                .toList();
+
+        // Take the platforms that the game currently has
+        List<Platform> currentPlatform = game.getPlatforms();
+
+        // Fetch all the platforms  from the repository
+        List <Platform> newPlatforms = platformRepository.findAllById(platformIds);
+
+        // Take the all the supported platforms exp('PC', 'PS4', 'PS5' etc.)
+        List<Platform> platformsToAdd = new ArrayList<>(newPlatforms);
+        // Remove the platforms that are already saved
+        platformsToAdd.removeAll(currentPlatform);
+
+
+        List<Platform> platformsToRemove = new ArrayList<>(currentPlatform);
+        platformsToRemove.removeAll(newPlatforms);
+
+        for (Platform platform : platformsToAdd) {
+            game.addPlatform(platform);
+        }
+
+        for (Platform platform: platformsToRemove){
+            game.removePlatform(platform);
+        }
     }
 
     @Override
