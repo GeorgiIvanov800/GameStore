@@ -76,6 +76,16 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void updateGame(String gameId, GameRequest gameRequest) {
+        final Game game = gameRepository.findById(gameId)
+                .orElseThrow(() -> new RuntimeException("Game not found"));
+
+
+        if (!game.getTitle().equals(gameRequest.title()) && gameRepository.existsByTitle(gameRequest.title())) {
+            log.info("Game with title already exists");
+            //TODO create dedicated exception
+            throw new RuntimeException("Title already exists");
+        }
+
 
     }
 
