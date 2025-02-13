@@ -14,6 +14,10 @@ import com.georgi.store.repository.PlatformRepository;
 import com.georgi.store.service.GameService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -137,7 +141,23 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public PageResponse<GameResponse> findAllGames(int page, int size) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+
+        Page<Game> gamesPage = gameRepository.findAll(pageable);
+
+        List<GameResponse> gameResponses = gamesPage.stream()
+                .map(gameMapper:: toGameResponse)
+                .toList();
+        
+        
+        return PageResponse.<GameResponse>builder()
+                .content(gameResponses)
+                .pageNumber(gamesPage.getNumber())
+                .size(gamesPage.getSize())
+                .totalElements(gamesPage.getTotalElements())
+                .isFirst(gamesPage.isFirst())
+                .isLast(gamesPage.isLast())
+                .build();
     }
 
     @Override
