@@ -8,17 +8,13 @@ import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.entity.Platform;
 import com.georgi.store.model.enums.Console;
 import com.georgi.store.model.mapper.GameMapper;
-import com.georgi.store.repository.CategoryRepository;
-import com.georgi.store.repository.CommentRepository;
-import com.georgi.store.repository.GameRepository;
-import com.georgi.store.repository.PlatformRepository;
+import com.georgi.store.repository.*;
 import com.georgi.store.service.GameService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +33,7 @@ public class GameServiceImpl implements GameService {
     private final GameMapper gameMapper;
     private final CategoryRepository categoryRepository;
     private final CommentRepository commentRepository;
+    private final WishListRepository wishListRepository;
 
     @Override
     public String saveGame(final GameRequest gameRequest) {
@@ -170,7 +167,7 @@ public class GameServiceImpl implements GameService {
         long commentsCount = commentRepository.countByGameId(gameId);
 
         // check the wishlist
-
+        long wishlistCount = wishListRepository.countByGameId(gameId);
 
         // check the relation ( between Game Category Comment and Wishlist)
     }
