@@ -32,7 +32,7 @@ public class Game extends BaseEntity {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", orphanRemoval = true)
     private List<Comment> comments;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

@@ -9,6 +9,7 @@ import com.georgi.store.model.entity.Platform;
 import com.georgi.store.model.enums.Console;
 import com.georgi.store.model.mapper.GameMapper;
 import com.georgi.store.repository.CategoryRepository;
+import com.georgi.store.repository.CommentRepository;
 import com.georgi.store.repository.GameRepository;
 import com.georgi.store.repository.PlatformRepository;
 import com.georgi.store.service.GameService;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -34,6 +36,7 @@ public class GameServiceImpl implements GameService {
     private final PlatformRepository platformRepository;
     private final GameMapper gameMapper;
     private final CategoryRepository categoryRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public String saveGame(final GameRequest gameRequest) {
@@ -161,7 +164,14 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public void deleteGame(String gameId) {
+    @Transactional
+    public void deleteGame(String gameId, boolean confirm) {
+        // check the comments
+        long commentsCount = commentRepository.countByGameId(gameId);
 
+        // check the wishlist
+
+
+        // check the relation ( between Game Category Comment and Wishlist)
     }
 }
