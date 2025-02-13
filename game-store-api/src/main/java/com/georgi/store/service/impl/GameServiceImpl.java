@@ -163,11 +163,28 @@ public class GameServiceImpl implements GameService {
     @Override
     @Transactional
     public void deleteGame(String gameId, boolean confirm) {
+        final List<String> warnings = new ArrayList<>();
+
         // check the comments
         long commentsCount = commentRepository.countByGameId(gameId);
+        if (commentsCount > 0) {
+            warnings.add("There is already a comment in the game");
+            System.out.println("The current game has comments");
+        }
 
         // check the wishlist
         long wishlistCount = wishListRepository.countByGameId(gameId);
+
+        if (wishlistCount > 0) {
+            warnings.add("There is already a wishlist in the game");
+            System.out.println("The current game belongs to wishlist");
+        }
+
+        if (warnings.size() > 0) {
+            // add custom exception
+            throw new RuntimeException("One or more warnings are not supported");
+        }
+
 
         // check the relation ( between Game Category Comment and Wishlist)
     }
