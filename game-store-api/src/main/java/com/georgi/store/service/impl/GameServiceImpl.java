@@ -90,7 +90,14 @@ public class GameServiceImpl implements GameService {
                 .map(Console::valueOf)
                 .toList();
 
+        // This is a common patter on how to manage a ManyToMany relation. How to add or remove relation between entities
         final List<Platform> platforms = platformRepository.findAllByConsoleIn(selectedConsole);
+
+        if (platforms.size() != selectedConsole.size()) {
+            log.warn("Received a non supported platforms. Received: {}", selectedConsole);
+            throw new RuntimeException("One or more platforms are not supported");
+        }
+
 
         final List<String> platformIds = platforms.stream()
                 .map(Platform::getId)
@@ -118,6 +125,9 @@ public class GameServiceImpl implements GameService {
         for (Platform platform: platformsToRemove){
             game.removePlatform(platform);
         }
+
+        game.setTitle(gameRequest.title());
+        gameRepository.save(game);
     }
 
     @Override
