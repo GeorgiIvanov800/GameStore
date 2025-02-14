@@ -6,6 +6,7 @@ import com.georgi.store.model.dto.gameDto.GameRequest;
 import com.georgi.store.model.dto.gameDto.GameResponse;
 import com.georgi.store.model.entity.Game;
 import com.georgi.store.model.entity.Platform;
+import com.georgi.store.model.entity.WishList;
 import com.georgi.store.model.enums.Console;
 import com.georgi.store.model.mapper.GameMapper;
 import com.georgi.store.repository.*;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -165,6 +167,7 @@ public class GameServiceImpl implements GameService {
     public void deleteGame(String gameId, boolean confirm) {
         final List<String> warnings = new ArrayList<>();
 
+        // check the relation ( between Game Category Comment and Wishlist)
         // check the comments
         long commentsCount = commentRepository.countByGameId(gameId);
         if (commentsCount > 0) {
@@ -180,12 +183,22 @@ public class GameServiceImpl implements GameService {
             System.out.println("The current game belongs to wishlist");
         }
 
-        if (warnings.size() > 0) {
+        if (!warnings.isEmpty() && !confirm) {
             // add custom exception
-            throw new RuntimeException("One or more warnings are not supported");
+            throw new RuntimeException("One or more warnings!");
         }
 
+        Game game = gameRepository.findById(gameId)
+                .orElseThrow(() -> new RuntimeException("Game not found"));
 
-        // check the relation ( between Game Category Comment and Wishlist)
+        // Make sure we first delete the game from the wishlist before we delete the game itself
+        for (WishList wishlist : game.getWishlists()) {
+            wishlist.getGames().remove(game);
+        }
+
+        // Don't need to delete the comment since the Join strategy is orphanRemoval = true
+        // When a game is deleted, its comments are removed automatically.
+        gameRepository.deleteById(gameId);
+
     }
 }

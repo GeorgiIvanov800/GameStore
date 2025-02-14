@@ -20,6 +20,6 @@ public class Comment extends BaseEntity {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "game_id")
+    @JoinColumn(name = "game_id", nullable = false)
     private Game game;
 }

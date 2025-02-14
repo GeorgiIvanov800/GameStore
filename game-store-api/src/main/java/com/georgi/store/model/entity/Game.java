@@ -1,6 +1,5 @@
 package com.georgi.store.model.entity;
 
-import com.georgi.store.model.enums.Console;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.Set;
 
 
 @Getter
@@ -46,13 +46,13 @@ public class Game extends BaseEntity {
             )
     }
     )
-    private List<WishList> wishlists;
+    private Set<WishList> wishlists;
 
-    public void addGameToWishlist(WishList wishlist) {
+    public void addWishlist(WishList wishlist) {
         this.wishlists.add(wishlist);
         wishlist.getGames().add(this);
     }
-    public void removeGameFromWishlist(WishList wishlist) {
+    public void removeWishlist(WishList wishlist) {
         this.wishlists.remove(wishlist);
         wishlist.getGames().remove(this);
     }

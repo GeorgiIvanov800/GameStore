@@ -14,4 +14,6 @@ public interface WishListRepository extends JpaRepository<WishList, String> {
             WHERE g.id = :gameId
             """)
     long countByGameId(String gameId);
+
+
 }

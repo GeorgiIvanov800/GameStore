@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -24,5 +24,5 @@ public class WishList extends BaseEntity {
     private User user;
 
     @ManyToMany(mappedBy = "wishlists", fetch = FetchType.EAGER)
-    private List<Game> games;
+    private Set<Game> games;
 }
